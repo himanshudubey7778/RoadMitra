@@ -1,0 +1,37 @@
+{
+  "name": "roadmitra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himanshudubey7778/RoadMitra.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/himanshudubey7778/RoadMitra/issues"
+  },
+  "homepage": "https://github.com/himanshudubey7778/RoadMitra#readme",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "mongoose": "^9.9.3",
+    "next": "^16.2.12",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.25",
+    "tailwindcss": "^4.3.3"
+  }
+}
