@@ -1,100 +1,109 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // 🚀 Router import kiya
+import { useRouter } from "next/navigation";
+import LanguageSelector from "../component/LanguageSelector";
 
+// 1. DATA OPTIMIZATION: Static Arrays bahar hain (Memory bachane ke liye)
+const recentRescues = [
+  "✅ 2 mins ago: Flat tire fixed in Downtown",
+  "🚀 5 mins ago: 2L Petrol delivered on Highway 4",
+  "✅ 12 mins ago: Car unlocked safely",
+  "✅ Just now: Tow truck dispatched to South Avenue",
+];
+
+const services = [
+  {
+    id: 1,
+    category: "Repair",
+    title: "Flat Tire / Puncture",
+    description:
+      "Fast on-spot puncture repair and stepney replacement by verified experts.",
+    icon: "🛞",
+    gradient: "from-blue-500 to-cyan-400",
+    time: "10-15 mins",
+  },
+  {
+    id: 2,
+    category: "Delivery",
+    title: "Emergency Fuel",
+    description:
+      "PESO-approved jerry can fuel delivery (Petrol/Diesel) right to your live location.",
+    icon: "⛽",
+    gradient: "from-orange-500 to-yellow-400",
+    time: "10-20 mins",
+  },
+  {
+    id: 3,
+    category: "Repair",
+    title: "Battery Jumpstart",
+    description:
+      "Dead battery? Get a quick power boost to get your engine roaring again.",
+    icon: "🔋",
+    gradient: "from-green-500 to-emerald-400",
+    time: "15 mins",
+  },
+  {
+    id: 4,
+    category: "Logistics",
+    title: "Towing Service",
+    description:
+      "Safe, secure, and flatbed towing for major breakdowns and accidents.",
+    icon: "🚛",
+    gradient: "from-purple-500 to-pink-400",
+    time: "25-30 mins",
+  },
+  {
+    id: 5,
+    category: "Repair",
+    title: "Engine Diagnostics",
+    description:
+      "On-site scanning and minor engine fixes to get you moving safely.",
+    icon: "🔧",
+    gradient: "from-red-500 to-rose-400",
+    time: "20 mins",
+  },
+  {
+    id: 6,
+    category: "Assistance",
+    title: "Key Lockout",
+    description:
+      "Locked keys inside? Professional, damage-free unlocking service.",
+    icon: "🗝️",
+    gradient: "from-indigo-500 to-violet-400",
+    time: "15 mins",
+  },
+];
+
+// 2. MAIN COMPONENT FUNCTION
 export default function ServicePage() {
-  const router = useRouter(); // 🚀 Router initialize kiya
+  const router = useRouter();
+
+  // State Hooks
   const [selectedService, setSelectedService] = useState(null);
   const [fuelType, setFuelType] = useState("Petrol");
   const [fuelQty, setFuelQty] = useState("1L");
   const [isSearching, setIsSearching] = useState(false);
 
-  // Advanced Feature: Live Ticker Data
-  const recentRescues = [
-    "✅ 2 mins ago: Flat tire fixed in Downtown",
-    "✅ 5 mins ago: 2L Petrol delivered on Highway 4",
-    "✅ 12 mins ago: Car unlocked safely",
-    "✅ Just now: Tow truck dispatched to South Avenue",
-  ];
-
-  const services = [
-    {
-      id: 1,
-      category: "Repair",
-      title: "Flat Tire / Puncture",
-      description:
-        "Fast on-spot puncture repair and stepney replacement by verified experts.",
-      icon: "🛞",
-      gradient: "from-blue-500 to-cyan-400",
-      time: "10-15 mins",
-    },
-    {
-      id: 2,
-      category: "Delivery",
-      title: "Emergency Fuel",
-      description:
-        "PESO-approved jerry can fuel delivery (Petrol/Diesel) right to your live location.",
-      icon: "⛽",
-      gradient: "from-orange-500 to-yellow-400",
-      time: "10-20 mins",
-    },
-    {
-      id: 3,
-      category: "Repair",
-      title: "Battery Jumpstart",
-      description:
-        "Dead battery? Get a quick power boost to get your engine roaring again.",
-      icon: "🔋",
-      gradient: "from-green-500 to-emerald-400",
-      time: "15 mins",
-    },
-    {
-      id: 4,
-      category: "Logistics",
-      title: "Towing Service",
-      description:
-        "Safe, secure, and flatbed towing for major breakdowns and accidents.",
-      icon: "🚛",
-      gradient: "from-purple-500 to-pink-400",
-      time: "25-30 mins",
-    },
-    {
-      id: 5,
-      category: "Repair",
-      title: "Engine Diagnostics",
-      description:
-        "On-site scanning and minor engine fixes to get you moving safely.",
-      icon: "🔧",
-      gradient: "from-red-500 to-rose-400",
-      time: "20 mins",
-    },
-    {
-      id: 6,
-      category: "Assistance",
-      title: "Key Lockout",
-      description:
-        "Locked keys inside? Professional, damage-free unlocking service.",
-      icon: "🗝️",
-      gradient: "from-indigo-500 to-violet-400",
-      time: "15 mins",
-    },
-  ];
-
+  // Logic Function
   const handleSearchRider = () => {
     setIsSearching(true);
-
-    // Fake Backend Delay: Searching for mechanic
     setTimeout(() => {
       setIsSearching(false);
-      // 🚀 Jadoo yahan hai: Modal band karo aur Booking page par bhej do!
       setSelectedService(null);
       router.push("/booking");
     }, 2500);
   };
 
+  // 3. SINGLE RETURN STATEMENT WITH UI
   return (
     <div className="min-h-screen bg-[#050505] text-white py-12 px-6 relative overflow-hidden">
+      {/* 🚀 Top Right Language Selector */}
+      <div className="absolute top-6 right-6 z-50">
+        <LanguageSelector />
+      </div>
+
       {/* Background Glowing Blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
@@ -106,7 +115,6 @@ export default function ServicePage() {
             {recentRescues.map((rescue, i) => (
               <span key={i}>{rescue}</span>
             ))}
-            {/* Duplicate for seamless looping */}
             {recentRescues.map((rescue, i) => (
               <span key={`dup-${i}`}>{rescue}</span>
             ))}
@@ -135,7 +143,7 @@ export default function ServicePage() {
           </p>
         </div>
 
-        {/* Advanced Services Grid */}
+        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
             <div
@@ -143,7 +151,6 @@ export default function ServicePage() {
               onClick={() => setSelectedService(service)}
               className="group relative bg-gray-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-gray-800 transition-all duration-500 hover:-translate-y-2 cursor-pointer shadow-lg overflow-hidden"
             >
-              {/* Shimmer Effect on Hover */}
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:animate-[shimmer_1.5s_infinite]"></div>
 
               <div className="absolute top-6 right-6 flex items-center gap-2">
