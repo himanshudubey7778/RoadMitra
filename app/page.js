@@ -1,36 +1,109 @@
 import Link from "next/link";
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center p-6">
-      {/* Header Section */}
-      <div className="text-center max-w-2xl">
-        <h1 className="text-5xl font-extrabold text-teal-400 mb-4 tracking-wide">
-          RoadMitra
-        </h1>
-        <p className="text-lg text-gray-400 mb-8">
-          Stuck on the road? Don't panic. RoadMitra is your ultimate live
-          command & rescue system. Get instant roadside assistance anytime,
-          anywhere.
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col justify-between selection:bg-blue-500 selection:text-white">
+      {/* Top Navbar */}
+      <header className="flex justify-between items-center px-8 py-6 border-b border-gray-800/60 backdrop-blur-md sticky top-0 z-50 bg-gray-950/80">
+        <div className="flex items-center space-x-3">
+          <h1 className="text-2xl font-black tracking-wider bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+            RoadMitra
+          </h1>
+          <span className="text-xs font-semibold bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-full border border-blue-500/20">
+            24/7 Live SOS
+          </span>
+        </div>
+        <div className="space-x-4">
+          <Link
+            href="/login"
+            className="px-5 py-2.5 rounded-xl text-sm font-semibold border border-gray-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all"
+          >
+            Login
+          </Link>
+          <Link
+            href="/signup"
+            className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/25 transition-all"
+          >
+            Sign Up
+          </Link>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="flex flex-col items-center text-center px-4 py-20 max-w-5xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium mb-6">
+          <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+          Next-Gen Roadside Assistance & Fleet Platform
+        </div>
+
+        <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+          Instant Roadside Assistance, <br />
+          <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            Anytime, Anywhere.
+          </span>
+        </h2>
+
+        <p className="text-gray-400 max-w-2xl text-lg mb-10 leading-relaxed">
+          Stuck on the highway or city roads? Connect instantly with verified
+          mechanics, real-time geolocation tracking, and emergency SOS support.
         </p>
-      </div>
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 w-full justify-center max-w-md">
-        <Link href="/help" className="w-full">
-          <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-red-500/30 transition-all w-full text-center">
-            🚨 Request Emergency Help
-          </button>
-        </Link>
-        <button className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-teal-500/30 transition-all w-full text-center">
-          🛠️ Find Nearby Mechanic
-        </button>
-      </div>
+        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+          <Link
+            href="/signup"
+            className="px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-base shadow-xl shadow-blue-600/30 transition-all transform hover:-translate-y-0.5"
+          >
+            Get Started As Customer / Partner
+          </Link>
+          <Link
+            href="/login"
+            className="px-8 py-4 bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-xl font-bold text-base transition-all"
+          >
+            Access Dashboard
+          </Link>
+        </div>
 
-      {/* Footer / Status */}
-      <div className="mt-16 text-sm text-gray-500 border-t border-gray-800 pt-6 w-full text-center max-w-xl">
-        <p>🟢 System Status: Active | Ready to Deploy Riders</p>
-        <p className="mt-2">© 2026 RoadMitra. Built for Scale.</p>
-      </div>
+        {/* Feature Highlights Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 text-left w-full">
+          <div className="p-6 rounded-2xl bg-gray-900/40 border border-gray-800/80 backdrop-blur-sm">
+            <div className="w-10 h-10 rounded-lg bg-blue-600/20 flex items-center justify-center text-blue-400 font-bold mb-4">
+              01
+            </div>
+            <h3 className="text-lg font-bold mb-2">Role-Based Access</h3>
+            <p className="text-gray-400 text-sm">
+              Dedicated secure dashboards tailored specifically for customers
+              and mechanics (riders).
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-gray-900/40 border border-gray-800/80 backdrop-blur-sm">
+            <div className="w-10 h-10 rounded-lg bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold mb-4">
+              02
+            </div>
+            <h3 className="text-lg font-bold mb-2">Geospatial Tracking</h3>
+            <p className="text-gray-400 text-sm">
+              Advanced MongoDB 2dsphere indexing to instantly locate the nearest
+              active mechanic within seconds.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-gray-900/40 border border-gray-800/80 backdrop-blur-sm">
+            <div className="w-10 h-10 rounded-lg bg-purple-600/20 flex items-center justify-center text-purple-400 font-bold mb-4">
+              03
+            </div>
+            <h3 className="text-lg font-bold mb-2">Production Ready</h3>
+            <p className="text-gray-400 text-sm">
+              Built using Next.js App Router, Tailwind CSS, and robust backend
+              validation for high scalability.
+            </p>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="text-center py-6 text-gray-500 text-sm border-t border-gray-800/60">
+        © 2026 RoadMitra. Engineered for Excellence & Scale.
+      </footer>
     </div>
   );
 }
