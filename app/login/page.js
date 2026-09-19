@@ -1,17 +1,54 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  useEffect(() => {
+    const registeredEmail = searchParams.get("registered");
+    if (registeredEmail) {
+      setEmail(registeredEmail);
+    }
+  }, [searchParams]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Logging in with:", email);
-    router.push("/dashboard");
+    setError("");
+
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      localStorage.setItem("roadmitra-user", JSON.stringify(data.user));
+
+      if (data.user.role === "PARTNER") {
+        router.push("/dashboard");
+      } else {
+        router.push("/user");
+      }
+    } catch (err) {
+      setError(err.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -20,6 +57,12 @@ export default function LoginPage() {
         <h2 className="text-3xl font-bold text-center text-blue-400">
           RoadMitra Login
         </h2>
+
+        {error && (
+          <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -50,12 +93,28 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold transition-all"
+            disabled={loading}
+            className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold transition-all disabled:opacity-60"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        <div className="text-center text-sm text-gray-300">
+          Don’t have an account?{" "}
+          <Link href="/signup" className="text-blue-400 hover:underline">
+            Sign up
+          </Link>
+        </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }
