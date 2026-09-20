@@ -4,25 +4,26 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col justify-between selection:bg-blue-500 selection:text-white">
       {/* Top Navbar */}
-      <header className="flex justify-between items-center px-8 py-6 border-b border-gray-800/60 backdrop-blur-md sticky top-0 z-50 bg-gray-950/80">
-        <div className="flex items-center space-x-3">
-          <h1 className="text-2xl font-black tracking-wider bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+      <header className="flex flex-col gap-4 px-4 py-4 border-b border-gray-800/60 backdrop-blur-md sticky top-0 z-50 bg-gray-950/80 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-6">
+        <div className="flex items-center justify-between gap-3 sm:justify-start">
+          <h1 className="text-xl font-black tracking-wider bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent sm:text-2xl">
             RoadMitra
           </h1>
-          <span className="text-xs font-semibold bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-full border border-blue-500/20">
+          <span className="text-[10px] font-semibold bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-full border border-blue-500/20 sm:text-xs">
             24/7 Live SOS
           </span>
         </div>
-        <div className="space-x-4">
+
+        <div className="flex flex-col gap-3 w-full sm:w-auto sm:flex-row sm:gap-4">
           <Link
             href="/login"
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold border border-gray-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all"
+            className="w-full text-center px-5 py-2.5 rounded-xl text-sm font-semibold border border-gray-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all sm:w-auto"
           >
             Login
           </Link>
           <Link
             href="/signup"
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/25 transition-all"
+            className="w-full text-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/25 transition-all sm:w-auto"
           >
             Sign Up
           </Link>
@@ -48,16 +49,16 @@ export default function Home() {
           mechanics, real-time geolocation tracking, and emergency SOS support.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+        <div className="flex flex-col gap-4 w-full justify-center sm:flex-row">
           <Link
             href="/signup"
-            className="px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-base shadow-xl shadow-blue-600/30 transition-all transform hover:-translate-y-0.5"
+            className="w-full px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-base shadow-xl shadow-blue-600/30 transition-all transform hover:-translate-y-0.5 sm:w-auto"
           >
             Get Started As Customer / Partner
           </Link>
           <Link
             href="/login"
-            className="px-8 py-4 bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-xl font-bold text-base transition-all"
+            className="w-full px-8 py-4 bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-xl font-bold text-base transition-all sm:w-auto"
           >
             Access Dashboard
           </Link>
