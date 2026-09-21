@@ -18,7 +18,6 @@ export default function UserProfile() {
         console.error("Failed to parse user session", e);
       }
     } else {
-      // Agar user login nahi hai toh login page par bhej do
       router.push("/login");
     }
   }, [router]);
@@ -28,41 +27,9 @@ export default function UserProfile() {
     router.push("/login");
   };
 
-  // Mock Data: Saved Vehicles (Aap isko baad mein backend se connect kar sakte hain)
-  const savedVehicles = [
-    {
-      id: 1,
-      type: "Car",
-      make: "Honda City",
-      number: "UP 44 AB 1234",
-      color: "White",
-    },
-    {
-      id: 2,
-      type: "Bike",
-      make: "Royal Enfield",
-      number: "UP 44 XY 9876",
-      color: "Black",
-    },
-  ];
-
-  // Mock Data: Rescue History
-  const rescueHistory = [
-    {
-      id: "REQ-092",
-      date: "10 Aug 2026",
-      service: "Flat Tire",
-      status: "Completed",
-      cost: "₹250",
-    },
-    {
-      id: "REQ-045",
-      date: "02 Jul 2026",
-      service: "2L Petrol Delivery",
-      status: "Completed",
-      cost: "₹300",
-    },
-  ];
+  // Real state: Fake data hata diya gaya hai, ab yeh empty arrays hain jab tak real data na aaye
+  const savedVehicles = [];
+  const rescueHistory = [];
 
   // Get initials for avatar fallback
   const getInitials = (name) => {
@@ -134,13 +101,13 @@ export default function UserProfile() {
               <div className="bg-black/50 p-5 rounded-2xl border border-gray-800">
                 <p className="text-gray-500 text-sm mb-1">Phone Number</p>
                 <p className="font-semibold text-lg">
-                  {user?.phone || "+91 98765 43210"}
+                  {user?.phone || "Not Provided"}
                 </p>
               </div>
               <div className="bg-black/50 p-5 rounded-2xl border border-gray-800">
                 <p className="text-gray-500 text-sm mb-1">Email Address</p>
                 <p className="font-semibold text-lg">
-                  {user?.email || "user@example.com"}
+                  {user?.email || "Not Provided"}
                 </p>
               </div>
               <div className="bg-black/50 p-5 rounded-2xl border border-gray-800">
@@ -163,28 +130,21 @@ export default function UserProfile() {
         {/* Tab Content: Vehicles */}
         {activeTab === "vehicles" && (
           <div className="animate-in fade-in duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              {savedVehicles.map((vehicle) => (
-                <div
-                  key={vehicle.id}
-                  className="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-6 rounded-3xl shadow-lg relative group"
-                >
-                  <div className="text-4xl mb-4">
-                    {vehicle.type === "Car" ? "🚗" : "🏍️"}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-1">{vehicle.make}</h3>
-                  <p className="text-teal-400 font-mono bg-teal-900/30 inline-block px-3 py-1 rounded-md mb-3 border border-teal-500/20">
-                    {vehicle.number}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    Color: {vehicle.color}
-                  </p>
-                  <button className="absolute top-6 right-6 text-gray-500 hover:text-red-500 transition-colors">
-                    🗑️
-                  </button>
-                </div>
-              ))}
-            </div>
+            {savedVehicles.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                {/* Vehicle mapping logic */}
+              </div>
+            ) : (
+              <div className="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-12 rounded-3xl text-center mb-6">
+                <p className="text-4xl mb-3">🚗</p>
+                <h3 className="text-xl font-bold mb-1">
+                  No Vehicles Saved Yet
+                </h3>
+                <p className="text-gray-400 text-sm mb-6">
+                  Add your vehicle details for faster emergency dispatch.
+                </p>
+              </div>
+            )}
             <button className="w-full border-2 border-dashed border-gray-700 hover:border-teal-500 text-gray-400 hover:text-teal-400 bg-gray-900/30 py-6 rounded-3xl font-bold transition-all flex items-center justify-center gap-2">
               <span className="text-2xl">+</span> Add New Vehicle
             </button>
@@ -193,36 +153,20 @@ export default function UserProfile() {
 
         {/* Tab Content: History */}
         {activeTab === "history" && (
-          <div className="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl shadow-lg overflow-hidden animate-in fade-in duration-300">
-            {rescueHistory.map((record, index) => (
-              <div
-                key={record.id}
-                className={`p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${index !== rescueHistory.length - 1 ? "border-b border-gray-800" : ""}`}
-              >
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-full font-bold border border-green-500/20">
-                      {record.status}
-                    </span>
-                    <span className="text-gray-500 text-sm font-mono">
-                      {record.id}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-white">
-                    {record.service}
-                  </h3>
-                  <p className="text-gray-400 text-sm">{record.date}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xl font-bold text-teal-400">
-                    {record.cost}
-                  </p>
-                  <button className="text-sm text-gray-500 hover:text-white underline underline-offset-4 mt-1 transition-colors">
-                    Download Invoice
-                  </button>
-                </div>
+          <div className="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl shadow-lg p-12 text-center animate-in fade-in duration-300">
+            {rescueHistory.length > 0 ? (
+              <div>{/* History mapping logic */}</div>
+            ) : (
+              <div>
+                <p className="text-4xl mb-3">📜</p>
+                <h3 className="text-xl font-bold mb-1">
+                  No Rescue History Found
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  You haven't requested any roadside assistance yet.
+                </p>
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>
