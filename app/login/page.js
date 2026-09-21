@@ -37,7 +37,8 @@ function LoginForm() {
         throw new Error(data.message || "Login failed");
       }
 
-      localStorage.setItem("roadmitra-user", JSON.stringify(data.user));
+      // FIX: Key ko "user" kar diya hai taaki profile page ise easily read kar sake
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       if (data.user.role === "PARTNER") {
         router.push("/dashboard");
@@ -113,7 +114,13 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
+          Loading...
+        </div>
+      }
+    >
       <LoginForm />
     </Suspense>
   );
