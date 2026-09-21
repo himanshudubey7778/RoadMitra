@@ -7,6 +7,42 @@ export default function UserProfile() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("profile");
   const [user, setUser] = useState(null);
+  // User Profile component ke andar yeh state aur function add kar:
+  const [locationStatus, setLocationStatus] = useState("Checking location...");
+
+  useEffect(() => {
+    const savedLoc = localStorage.getItem("user-location");
+    if (savedLoc) {
+      setLocationStatus("Location Enabled ✅");
+    } else {
+      setLocationStatus("Location not allowed ❌");
+    }
+  }, []);
+
+  const requestLocationPermission = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          localStorage.setItem("user-location", JSON.stringify(coords));
+          setLocationStatus("Location Enabled ✅");
+          alert("Location access granted successfully!");
+        },
+        (error) => {
+          alert(
+            "Location access denied. Please enable it in browser settings.",
+          );
+          setLocationStatus("Permission Denied ❌");
+        },
+        { enableHighAccuracy: true },
+      );
+    } else {
+      alert("Geolocation is not supported by your browser");
+    }
+  };
 
   // Load logged-in user data from localStorage
   useEffect(() => {
@@ -150,6 +186,22 @@ export default function UserProfile() {
             </button>
           </div>
         )}
+        <div className="bg-black/50 p-5 rounded-2xl border border-gray-800 flex items-center justify-between">
+          <div>
+            <p className="text-gray-500 text-sm mb-1">Live Location Status</p>
+            <p className="font-semibold text-lg text-teal-400">
+              {locationStatus}
+            </p>
+          </div>
+          {locationStatus.includes("❌") && (
+            <button
+              onClick={requestLocationPermission}
+              className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all"
+            >
+              Allow Location
+            </button>
+          )}
+        </div>
 
         {/* Tab Content: History */}
         {activeTab === "history" && (
