@@ -1,19 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function UserProfile() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("profile");
+  const [user, setUser] = useState(null);
 
-  // Mock Data: User Details
-  const userData = {
-    name: "Alex Sharma",
-    phone: "+91 98765 43210",
-    email: "alex@example.com",
-    memberSince: "August 2026",
+  // Load logged-in user data from localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Failed to parse user session", e);
+      }
+    } else {
+      // Agar user login nahi hai toh login page par bhej do
+      router.push("/login");
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/login");
   };
 
-  // Mock Data: Saved Vehicles
+  // Mock Data: Saved Vehicles (Aap isko baad mein backend se connect kar sakte hain)
   const savedVehicles = [
     {
       id: 1,
@@ -48,6 +63,12 @@ export default function UserProfile() {
       cost: "₹300",
     },
   ];
+
+  // Get initials for avatar fallback
+  const getInitials = (name) => {
+    if (!name) return "U";
+    return name.charAt(0).toUpperCase();
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] text-white py-12 px-6 relative overflow-hidden">
@@ -99,10 +120,12 @@ export default function UserProfile() {
           <div className="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-lg animate-in fade-in duration-300">
             <div className="flex items-center gap-6 mb-8 border-b border-gray-800 pb-8">
               <div className="w-24 h-24 bg-gradient-to-tr from-teal-500 to-blue-600 rounded-full flex items-center justify-center text-4xl font-bold shadow-lg">
-                {userData.name.charAt(0)}
+                {getInitials(user?.name)}
               </div>
               <div>
-                <h2 className="text-3xl font-bold">{userData.name}</h2>
+                <h2 className="text-3xl font-bold">
+                  {user?.name || "Loading..."}
+                </h2>
                 <p className="text-teal-400 font-medium">RoadMitra Member</p>
               </div>
             </div>
@@ -110,18 +133,28 @@ export default function UserProfile() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-black/50 p-5 rounded-2xl border border-gray-800">
                 <p className="text-gray-500 text-sm mb-1">Phone Number</p>
-                <p className="font-semibold text-lg">{userData.phone}</p>
+                <p className="font-semibold text-lg">
+                  {user?.phone || "+91 98765 43210"}
+                </p>
               </div>
               <div className="bg-black/50 p-5 rounded-2xl border border-gray-800">
                 <p className="text-gray-500 text-sm mb-1">Email Address</p>
-                <p className="font-semibold text-lg">{userData.email}</p>
+                <p className="font-semibold text-lg">
+                  {user?.email || "user@example.com"}
+                </p>
               </div>
               <div className="bg-black/50 p-5 rounded-2xl border border-gray-800">
-                <p className="text-gray-500 text-sm mb-1">Member Since</p>
-                <p className="font-semibold text-lg">{userData.memberSince}</p>
+                <p className="text-gray-500 text-sm mb-1">Account Role</p>
+                <p className="font-semibold text-lg text-teal-400">
+                  {user?.role || "CUSTOMER"}
+                </p>
               </div>
             </div>
-            <button className="mt-8 text-red-500 font-semibold hover:text-red-400 transition-colors">
+
+            <button
+              onClick={handleLogout}
+              className="mt-8 text-red-500 font-semibold hover:text-red-400 transition-colors cursor-pointer"
+            >
               Log Out
             </button>
           </div>
