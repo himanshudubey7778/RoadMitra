@@ -17,28 +17,42 @@ export async function POST(request) {
     if (!name || !email || !password || !phone || !role) {
       return NextResponse.json(
         { success: false, message: "All fields are required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { success: false, message: "Please enter a valid email address." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    if (!['CUSTOMER', 'PARTNER'].includes(role)) {
+    if (!["CUSTOMER", "PARTNER"].includes(role)) {
       return NextResponse.json(
         { success: false, message: "Role must be CUSTOMER or PARTNER." },
-        { status: 400 }
+        { status: 400 },
+      );
+    }
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(body.phone)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Please enter a valid 10-digit Indian phone number.",
+        },
+        { status: 400 },
       );
     }
 
     if (password.length < 6) {
       return NextResponse.json(
-        { success: false, message: "Password must be at least 6 characters long." },
-        { status: 400 }
+        {
+          success: false,
+          message: "Password must be at least 6 characters long.",
+        },
+        { status: 400 },
       );
     }
 
@@ -46,7 +60,7 @@ export async function POST(request) {
     if (existingUser) {
       return NextResponse.json(
         { success: false, message: "User with this email already exists." },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -74,21 +88,29 @@ export async function POST(request) {
           role: newUser.role,
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Signup API Error:", error);
 
-    if (error?.name === "MongoServerError" || error?.message?.includes("bad auth") || error?.message?.includes("Authentication failed")) {
+    if (
+      error?.name === "MongoServerError" ||
+      error?.message?.includes("bad auth") ||
+      error?.message?.includes("Authentication failed")
+    ) {
       return NextResponse.json(
-        { success: false, message: "Database authentication failed. Please check MongoDB Atlas credentials." },
-        { status: 503 }
+        {
+          success: false,
+          message:
+            "Database authentication failed. Please check MongoDB Atlas credentials.",
+        },
+        { status: 503 },
       );
     }
 
     return NextResponse.json(
       { success: false, message: "Internal Server Error. Please try again." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

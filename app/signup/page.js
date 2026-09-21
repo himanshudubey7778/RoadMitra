@@ -28,6 +28,20 @@ export default function SignupPage() {
       setError("Please agree to the terms and safety guidelines (OK).");
       return;
     }
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          localStorage.setItem("user-location", JSON.stringify(coords));
+        },
+        (error) => {
+          console.log("Location denied:", error.message);
+        },
+      );
+    }
 
     try {
       setLoading(true);
@@ -44,7 +58,9 @@ export default function SignupPage() {
       }
 
       alert("Account created successfully!");
-      router.push(`/login?registered=${encodeURIComponent(data.user?.email || "")}`);
+      router.push(
+        `/login?registered=${encodeURIComponent(data.user?.email || "")}`,
+      );
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
