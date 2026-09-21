@@ -14,7 +14,8 @@ export default function Home() {
           </span>
         </div>
 
-        <div className="flex flex-col gap-3 w-full sm:w-auto sm:flex-row sm:gap-4">
+        {/* Navbar Buttons Fixed for Mobile */}
+        <div className="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto sm:gap-4">
           <Link
             href="/login"
             className="w-full text-center px-5 py-2.5 rounded-xl text-sm font-semibold border border-gray-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all sm:w-auto"
@@ -31,41 +32,42 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <main className="flex flex-col items-center text-center px-4 py-20 max-w-5xl mx-auto">
+      <main className="flex flex-col items-center text-center px-4 py-16 sm:py-20 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium mb-6">
           <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
           Next-Gen Roadside Assistance & Fleet Platform
         </div>
 
-        <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
           Instant Roadside Assistance, <br />
           <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
             Anytime, Anywhere.
           </span>
         </h2>
 
-        <p className="text-gray-400 max-w-2xl text-lg mb-10 leading-relaxed">
+        <p className="text-gray-400 max-w-2xl text-base sm:text-lg mb-10 leading-relaxed">
           Stuck on the highway or city roads? Connect instantly with verified
           mechanics, real-time geolocation tracking, and emergency SOS support.
         </p>
 
-        <div className="flex flex-col gap-4 w-full justify-center sm:flex-row">
+        {/* Hero Section Buttons Fixed for Mobile */}
+        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center sm:w-auto">
           <Link
             href="/signup"
-            className="w-full px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-base shadow-xl shadow-blue-600/30 transition-all transform hover:-translate-y-0.5 sm:w-auto"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-sm sm:text-base shadow-xl shadow-blue-600/30 transition-all text-center"
           >
             Get Started As Customer / Partner
           </Link>
           <Link
             href="/login"
-            className="w-full px-8 py-4 bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-xl font-bold text-base transition-all sm:w-auto"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-xl font-bold text-sm sm:text-base transition-all text-center"
           >
             Access Dashboard
           </Link>
         </div>
 
         {/* Feature Highlights Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 text-left w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 sm:mt-24 text-left w-full">
           <div className="p-6 rounded-2xl bg-gray-900/40 border border-gray-800/80 backdrop-blur-sm">
             <div className="w-10 h-10 rounded-lg bg-blue-600/20 flex items-center justify-center text-blue-400 font-bold mb-4">
               01
@@ -102,7 +104,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-gray-500 text-sm border-t border-gray-800/60">
+      <footer className="text-center py-6 text-gray-500 text-sm border-t border-gray-800/60 px-4">
         © 2026 RoadMitra. Engineered for Excellence & Scale.
       </footer>
     </div>
