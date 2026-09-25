@@ -71,7 +71,7 @@ export async function POST(request) {
       name,
       email,
       password: hashedPassword,
-      phone,
+      phone: user.phone,
       role,
     });
 
